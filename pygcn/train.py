@@ -23,7 +23,7 @@ def parsers(parser):
     parser.add_argument('--hidden',type=int,default=16,help='Number of hidden units.')
     parser.add_argument('--dropout',type=float,default=0.5,help='Dropout rate (1 - keep probability).')
 
-def train(epoch,model,optimizer,adj,features,labels,idx_train,idx_val,idx_test):
+def train(epoch,model,optimizer,adj,features,labels,idx_train,idx_val,idx_test,args):
     t = time.time()
     model.train()
     optimizer.zero_grad()
@@ -48,7 +48,7 @@ def train(epoch,model,optimizer,adj,features,labels,idx_train,idx_val,idx_test):
           'acc_val: {:.4f}'.format(acc_val.item()),
           'time: {:.4f}s'.format(time.time() - t))
 
-def test():
+def test(model,adj,features,labels,idx_train,idx_val,idx_test,args):
     model.eval()
     output = model(features, adj)
     loss_test = F.nll_loss(output[idx_test], labels[idx_test])
@@ -87,12 +87,12 @@ def main():
     # Train model
     t_total = time.time()
     for epoch in range(args.epochs):
-        train(epoch,model,optimizer,adj,features,labels,idx_train,idx_val,idx_test)
+        train(epoch,model,optimizer,adj,features,labels,idx_train,idx_val,idx_test,args)
     print("Optimization Finished!")
     print("Total time elapsed: {:.4f}s".format(time.time() - t_total))
 
     # Testing
-    test()
+    test(model,adj,features,labels,idx_train,idx_val,idx_test,args)
 
 if __name__=='__main__':
     main()
