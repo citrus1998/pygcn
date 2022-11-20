@@ -23,7 +23,7 @@ def parsers(parser):
     parser.add_argument('--hidden',type=int,default=16,help='Number of hidden units.')
     parser.add_argument('--dropout',type=float,default=0.5,help='Dropout rate (1 - keep probability).')
 
-def train(epoch,model,optimizer):
+def train(epoch,model,optimizer,adj,features,labels,idx_train,idx_val,idx_test):
     t = time.time()
     model.train()
     optimizer.zero_grad()
@@ -87,7 +87,7 @@ def main():
     # Train model
     t_total = time.time()
     for epoch in range(args.epochs):
-        train(epoch)
+        train(epoch,model,optimizer,adj,features,labels,idx_train,idx_val,idx_test)
     print("Optimization Finished!")
     print("Total time elapsed: {:.4f}s".format(time.time() - t_total))
 
