@@ -12,9 +12,8 @@ import torch.optim as optim
 from pygcn.utils import load_data, accuracy
 from pygcn.models import GCN
 
-def parsers():
+def parsers(parser):
     # Training settings
-    parser = argparse.ArgumentParser()
     parser.add_argument('--no-cuda',action='store_true',default=False,help='Disables CUDA training.')
     parser.add_argument('--fastmode',action='store_true',default=False,help='Validate during training pass.')
     parser.add_argument('--seed',type=int,default=42,help='Random seed.')
@@ -24,7 +23,7 @@ def parsers():
     parser.add_argument('--hidden',type=int,default=16,help='Number of hidden units.')
     parser.add_argument('--dropout',type=float,default=0.5,help='Dropout rate (1 - keep probability).')
 
-def train(epoch):
+def train(epoch,model,optimizer):
     t = time.time()
     model.train()
     optimizer.zero_grad()
@@ -59,7 +58,8 @@ def test():
           "accuracy= {:.4f}".format(acc_test.item()))
 
 def main():
-    parsers()
+    parser = argparse.ArgumentParser()
+    parsers(parser)
     args = parser.parse_args()
     args.cuda = not args.no_cuda and torch.cuda.is_available()
 
