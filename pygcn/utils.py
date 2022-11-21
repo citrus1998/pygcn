@@ -1,10 +1,6 @@
 import os,sys
 import numpy as np
 import scipy.sparse as sp
-import matplotlib.pyplot as plt
-
-import networkx as nx
-from networkx.algorithms import community
 import torch
 
 
@@ -83,12 +79,3 @@ def sparse_mx_to_torch_sparse_tensor(sparse_mx):
     values = torch.from_numpy(sparse_mx.data)
     shape = torch.Size(sparse_mx.shape)
     return torch.sparse.FloatTensor(indices, values, shape)
-
-def plt_nets(adj):
-    G = nx.from_numpy_array(adj)
-    print(list(G.edges(data=True))[:10])
-
-    # if not os.path.exist("../results"):
-    #     os.makedir("../results")
-
-    # plt.savefig("../results/")

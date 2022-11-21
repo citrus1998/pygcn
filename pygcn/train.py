@@ -9,8 +9,22 @@ import torch
 import torch.nn.functional as F
 import torch.optim as optim
 
-from pygcn.utils import load_data, accuracy, plt_nets
+import matplotlib.pyplot as plt
+
+import networkx as nx
+from networkx.algorithms import community
+
+from pygcn.utils import load_data, accuracy
 from pygcn.models import GCN
+
+def net2img(adj):
+    G = nx.from_numpy_array(adj)
+    print(list(G.edges(data=True))[:10])
+
+    # if not os.path.exist("../results"):
+    #     os.makedir("../results")
+
+    # plt.savefig("../results/")
 
 def parsers(parser):
     # Training settings
@@ -71,7 +85,7 @@ def main():
     # Load data
     adj, features, labels, idx_train, idx_val, idx_test = load_data()
 
-    plt_nets(adj)
+    net2img(adj)
 
     # Model and optimizer
     model = GCN(nfeat=features.shape[1],nhid=args.hidden,nclass=labels.max().item()+1,dropout=args.dropout)
