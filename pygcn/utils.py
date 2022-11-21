@@ -84,7 +84,7 @@ def sparse_mx_to_torch_sparse_tensor(sparse_mx):
     shape = torch.Size(sparse_mx.shape)
     return torch.sparse.FloatTensor(indices, values, shape)
 
-def print_network(adj):
+def print_nets(adj):
     G = nx.from_numpy_array(adj)
     print(list(G.edges(data=True))[:10])
 
