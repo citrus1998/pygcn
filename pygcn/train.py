@@ -9,7 +9,7 @@ import torch
 import torch.nn.functional as F
 import torch.optim as optim
 
-from pygcn.utils import load_data, accuracy, print_nets
+from pygcn.utils import load_data, accuracy, plt_nets
 from pygcn.models import GCN
 
 def parsers(parser):
@@ -71,7 +71,7 @@ def main():
     # Load data
     adj, features, labels, idx_train, idx_val, idx_test = load_data()
 
-    print_nets(adj)
+    plt_nets(adj)
 
     # Model and optimizer
     model = GCN(nfeat=features.shape[1],nhid=args.hidden,nclass=labels.max().item()+1,dropout=args.dropout)
