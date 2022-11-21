@@ -85,6 +85,7 @@ def main():
     # Load data
     adj, features, labels, idx_train, idx_val, idx_test = load_data()
 
+    print(adj)
     net2img(adj)
 
     # Model and optimizer
